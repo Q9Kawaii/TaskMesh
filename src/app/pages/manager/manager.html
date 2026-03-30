@@ -1,130 +1,107 @@
-<div class="flex min-h-screen bg-[#f8fafc]">
-  
-  <aside class="w-72 bg-white border-r border-slate-200 flex flex-col fixed h-full z-10">
-    <div class="p-8 mb-4">
-      <div class="flex items-center gap-3 mb-1">
-        <div class="w-8 h-8 bg-blue-700 rounded flex items-center justify-center text-white font-bold text-sm">S</div>
-        <span class="font-black text-slate-800 tracking-tight text-lg">MAZ.</span>
-      </div>
-      <p class="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">Management System</p>
-    </div>
-
-    <nav class="flex-1 px-4 space-y-2">
-      <button (click)="activeTab = 'dashboard'" [class]="activeTab === 'dashboard' ? 'bg-blue-700 text-white shadow-lg shadow-blue-700/20' : 'text-slate-500 hover:bg-slate-50'"
-        class="w-full flex items-center gap-3 px-5 py-3.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all">
-        Dashboard
-      </button>
-      <button (click)="activeTab = 'employees'" [class]="activeTab === 'employees' ? 'bg-blue-700 text-white shadow-lg shadow-blue-700/20' : 'text-slate-500 hover:bg-slate-50'"
-        class="w-full flex items-center gap-3 px-5 py-3.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all">
-        Employee List
-      </button>
-      <button (click)="activeTab = 'register'" [class]="activeTab === 'register' ? 'bg-blue-700 text-white shadow-lg shadow-blue-700/20' : 'text-slate-500 hover:bg-slate-50'"
-        class="w-full flex items-center gap-3 px-5 py-3.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all">
-        Register Staff
-      </button>
-      <button (click)="activeTab = 'account'" [class]="activeTab === 'account' ? 'bg-blue-700 text-white shadow-lg shadow-blue-700/20' : 'text-slate-500 hover:bg-slate-50'"
-        class="w-full flex items-center gap-3 px-5 py-3.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all">
-        My Account
-      </button>
-    </nav>
-
-    <div class="p-6 border-t border-slate-100">
-      <button (click)="logout()" class="w-full py-3 rounded-xl border border-rose-100 text-rose-500 text-xs font-bold hover:bg-rose-50 transition-all">
-        Sign Out
-      </button>
-    </div>
-  </aside>
-
-  <main class="flex-1 ml-72 p-12">
-    
-    <div *ngIf="activeTab === 'dashboard'" class="animate-in fade-in slide-in-from-bottom-4 duration-500">
-      <h1 class="text-3xl font-black text-[#1e293b] mb-2">Manager <span class="text-blue-700">Dashboard</span></h1>
-      <p class="text-slate-400 font-bold text-sm mb-10 uppercase tracking-widest">Welcome, {{ userData?.name }}</p>
-
-      <div class="bg-white border border-slate-200 rounded-[2rem] p-8 shadow-sm mb-10 flex items-center gap-8">
-        <div class="w-24 h-24 rounded-3xl bg-slate-50 border border-slate-100 flex items-center justify-center text-3xl text-blue-700 font-black uppercase">
-          {{ userData?.name?.charAt(0) }}
-        </div>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-12 flex-1">
-          <div class="space-y-1"><p class="text-[10px] text-slate-400 font-black uppercase tracking-widest">Manager Name</p><p class="font-bold text-slate-800">{{ userData?.name }}</p></div>
-          <div class="space-y-1"><p class="text-[10px] text-slate-400 font-black uppercase tracking-widest">Official Email</p><p class="font-bold text-slate-800">{{ userData?.email }}</p></div>
-          <div class="space-y-1"><p class="text-[10px] text-slate-400 font-black uppercase tracking-widest">Staff Count</p><p class="font-bold text-slate-800">{{ employees.length }} Members</p></div>
-          <div class="space-y-1"><p class="text-[10px] text-slate-400 font-black uppercase tracking-widest">System Status</p><p class="font-bold text-emerald-500 uppercase text-xs">Active Session</p></div>
-        </div>
+<div class="flex flex-col h-screen bg-[#f8fafc] overflow-hidden">
+  <header class="h-16 bg-white border-b border-slate-100 flex items-center justify-between px-8 shrink-0 z-20">
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 bg-blue-700 rounded flex items-center justify-center text-white font-black text-sm">M</div>
+      <div>
+        <h1 class="text-[10px] font-black text-slate-800 tracking-tighter leading-none uppercase">Maz Software</h1>
+        <p class="text-[8px] font-bold text-slate-400 uppercase tracking-widest">Manager Portal</p>
       </div>
     </div>
 
-    <div *ngIf="activeTab === 'employees'" class="space-y-8 animate-in fade-in duration-500">
-      <h2 class="text-2xl font-black text-slate-900">Workforce <span class="text-blue-700">Analytics</span></h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div *ngFor="let emp of employees" (click)="selectedEmployee = emp" class="bg-white p-6 rounded-3xl border border-slate-200 hover:border-blue-500 shadow-sm transition-all cursor-pointer group">
-          <div class="flex items-center gap-4 mb-4">
-            <div class="w-10 h-10 rounded-xl bg-slate-100 text-blue-700 font-bold flex items-center justify-center uppercase">{{ emp.name.charAt(0) }}</div>
-            <h3 class="font-bold text-slate-800 group-hover:text-blue-700">{{ emp.name }}</h3>
-          </div>
-          <div class="space-y-2">
-            <div class="flex justify-between text-[10px] font-black uppercase text-slate-400"><span>Workload</span><span>{{ emp.workload }}%</span></div>
-            <div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden"><div class="bg-blue-600 h-full transition-all" [style.width.%]="emp.workload"></div></div>
-          </div>
+    <div class="flex items-center gap-6">
+      <div class="flex items-center gap-2 px-3 py-1.5 bg-blue-50 rounded-full">
+        <div class="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></div>
+        <span class="text-[9px] font-black text-blue-700 uppercase tracking-widest">Encrypted Session</span>
+      </div>
+      
+      <div class="flex items-center gap-4 border-l border-slate-100 pl-6">
+        <div class="text-right">
+          <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest leading-none">Logged in as</p>
+          <p class="text-xs font-black text-slate-800">{{ userData?.name || 'Loading...' }}</p>
         </div>
+        <button (click)="logout()" class="px-4 py-2 bg-blue-700 text-white text-[10px] font-black uppercase tracking-widest rounded-lg hover:bg-blue-800 transition-all">
+          Logout
+        </button>
       </div>
     </div>
+  </header>
 
-    <div *ngIf="activeTab === 'register'" class="max-w-2xl animate-in zoom-in-95 duration-300">
-      <div class="bg-white border border-slate-200 rounded-[2.5rem] p-10 shadow-sm">
-        <h2 class="text-2xl font-black text-slate-900 mb-2">Staff Registration</h2>
-        <p class="text-slate-400 text-sm font-bold uppercase tracking-widest mb-8">Create verified employee account</p>
+  <div class="flex flex-1 overflow-hidden">
+    <aside class="w-72 bg-white border-r border-slate-200 flex flex-col shrink-0">
+      <div class="p-8 mb-4">
+        <div class="flex items-center gap-3 mb-1">
+          <div class="w-8 h-8 bg-blue-700 rounded flex items-center justify-center text-white font-bold text-sm">M</div>
+          <span class="font-black text-slate-800 tracking-tight text-lg">MAZ.</span>
+        </div>
+        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">Management System</p>
+      </div>
+
+      <nav class="flex-1 px-4 space-y-2">
+        <button (click)="activeTab = 'dashboard'" [class]="activeTab === 'dashboard' ? 'bg-blue-700 text-white shadow-lg shadow-blue-700/20' : 'text-slate-500 hover:bg-slate-50'"
+          class="w-full flex items-center gap-3 px-5 py-3.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all">
+          Dashboard
+        </button>
+        <button (click)="activeTab = 'employees'" [class]="activeTab === 'employees' ? 'bg-blue-700 text-white shadow-lg shadow-blue-700/20' : 'text-slate-500 hover:bg-slate-50'"
+          class="w-full flex items-center gap-3 px-5 py-3.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all">
+          Employee List
+        </button>
+        <button (click)="activeTab = 'register'" [class]="activeTab === 'register' ? 'bg-blue-700 text-white shadow-lg shadow-blue-700/20' : 'text-slate-500 hover:bg-slate-50'"
+          class="w-full flex items-center gap-3 px-5 py-3.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all">
+          Register Staff
+        </button>
+        <button (click)="activeTab = 'account'" [class]="activeTab === 'account' ? 'bg-blue-700 text-white shadow-lg shadow-blue-700/20' : 'text-slate-500 hover:bg-slate-50'"
+          class="w-full flex items-center gap-3 px-5 py-3.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all">
+          My Account
+        </button>
+      </nav>
+
+      <div class="p-6 border-t border-slate-100">
+        <button (click)="logout()" class="w-full py-3 rounded-xl border border-rose-100 text-rose-500 text-xs font-bold hover:bg-rose-50 transition-all">
+          Sign Out
+        </button>
+      </div>
+    </aside>
+
+    <div class="flex-1 flex flex-col min-w-0">
+      <main class="flex-1 p-12 overflow-y-auto bg-[#f8fafc]">
         
-        <div class="space-y-6">
-          <div class="space-y-2">
-            <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Full Name</label>
-            <input [(ngModel)]="newEmployee.name" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500/10 text-sm font-bold">
-          </div>
-          <div class="space-y-2">
-            <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Work Email</label>
-            <input [(ngModel)]="newEmployee.email" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500/10 text-sm font-bold">
-          </div>
-          <div class="space-y-2">
-            <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Initial Password</label>
-            <input [(ngModel)]="newEmployee.password" type="password" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500/10 text-sm font-bold">
-          </div>
-          <button (click)="createEmployee()" class="w-full py-4 bg-blue-700 text-white rounded-2xl font-black uppercase tracking-widest text-xs shadow-xl shadow-blue-700/20 hover:scale-[1.01] active:scale-95 transition-all">
-            Authorize & Register
-          </button>
+        <div *ngIf="activeTab === 'dashboard'" class="animate-in fade-in slide-in-from-bottom-4 duration-500">
+          <app-dashboard [userData]="userData" [employees]="employees"></app-dashboard>
         </div>
-      </div>
+
+        <div *ngIf="activeTab === 'employees'" class="animate-in fade-in duration-500">
+          <app-employee-list [employees]="employees" (selectEmployee)="selectedEmployee = $event"></app-employee-list>
+        </div>
+
+        <div *ngIf="activeTab === 'register'" class="animate-in zoom-in-95 duration-300">
+          <app-register-staff (refresh)="fetchEmployees()"></app-register-staff>
+        </div>
+
+        <div *ngIf="activeTab === 'account' && userData" class="animate-in fade-in duration-500">
+          <app-my-account [userData]="userData"></app-my-account>
+        </div>
+
+      </main>
+
+      <footer class="h-10 bg-white border-t border-slate-100 px-8 flex items-center justify-between shrink-0">
+        <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">
+          © 2026 MAZ SOFTWARE PRIVATE LIMITED • MANAGER PORTAL
+        </p>
+        <div class="flex items-center gap-6">
+          <p class="text-[9px] font-bold text-slate-300 uppercase tracking-widest">
+            Security <span class="text-emerald-500">V4.0 Active</span>
+          </p>
+          <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">
+            Identity: <span class="text-blue-700 font-black">{{ userData?.email }}</span>
+          </p>
+        </div>
+      </footer>
     </div>
+  </div>
 
-    <div *ngIf="activeTab === 'account'" class="animate-in fade-in duration-500">
-      <h2 class="text-2xl font-black text-slate-900 mb-8">Account <span class="text-blue-700">Settings</span></h2>
-      <div class="bg-white border border-slate-200 rounded-[2.5rem] p-10 shadow-sm max-w-4xl">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
-          <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100">
-            <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Full Name</label>
-            <input [(ngModel)]="userData.name" class="w-full bg-transparent font-bold text-slate-800 outline-none mt-1">
-          </div>
-          <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100">
-            <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Email Address</label>
-            <p class="font-bold text-slate-400 mt-1">{{ managerEmail }}</p>
-          </div>
-        </div>
-
-        <div class="flex flex-col md:flex-row gap-4 pt-8 border-t border-slate-100">
-          <button (click)="updateManagerProfile()" class="flex-1 py-4 bg-blue-700 text-white rounded-2xl font-black uppercase tracking-widest text-xs shadow-lg shadow-blue-700/20 transition-all active:scale-95">
-            Update Profile
-          </button>
-          <button (click)="resetPassword()" class="flex-1 py-4 border border-blue-200 text-blue-700 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-blue-50 transition-all active:scale-95">
-            Send Reset Link
-          </button>
-        </div>
-      </div>
-    </div>
-
-  </main>
+  <app-employee-detail 
+    *ngIf="selectedEmployee" 
+    [employee]="selectedEmployee" 
+    (close)="selectedEmployee = null">
+  </app-employee-detail>
 </div>
-
-<app-employee-detail
-  *ngIf="selectedEmployee"
-  [employee]="selectedEmployee"
-  (close)="selectedEmployee = null">
-</app-employee-detail>

@@ -1,203 +1,188 @@
-<div class="flex min-h-screen bg-gray-100">
+<div class="flex flex-col min-h-screen bg-gray-100 font-sans">
 
-    <!-- SIDEBAR -->
-    <div class="w-64 bg-white shadow-lg flex flex-col p-4 justify-between">
+    <!-- 🔷 NAVBAR -->
+    <nav class="bg-white shadow-sm px-6 py-3 flex justify-between items-center border-b border-gray-100">
 
-    <!-- TOP SECTION -->
-    <div>
-        <div class="flex items-center gap-3 mb-8">
-            <div class="bg-blue-600 text-white w-10 h-10 flex items-center justify-center rounded-full font-bold">
-                E
+        <div class="flex items-center gap-3">
+            <div class="bg-blue-700 text-white w-10 h-10 flex items-center justify-center rounded-lg font-black italic text-xl">
+                M
             </div>
-            <h2 class="text-lg font-semibold text-gray-700">Employee Hub</h2>
+            <div>
+                <h1 class="text-sm font-black italic tracking-tighter text-blue-700 leading-none uppercase">MAZ SOFTWARE</h1>
+                <p class="text-[10px] font-bold text-gray-400 tracking-[0.2em] -mt-0.5 uppercase">MANAGEMENT SYSTEM</p>
+            </div>
         </div>
 
-        <!-- MENU -->
-        <div class="space-y-2">
+        <div class="flex items-center gap-4">
 
-            <button (click)="setSection('dashboard')"
-                [ngClass]="menuClass('dashboard')"
-                class="w-full text-left px-4 py-2 rounded-lg transition-all duration-300
-                       hover:bg-blue-100 hover:text-blue-700 hover:translate-x-1">
-                My Profile
-            </button>
-
-            <button (click)="setSection('ongoing')"
-                [ngClass]="menuClass('ongoing')"
-                class="w-full text-left px-4 py-2 rounded-lg transition-all duration-300
-                       hover:bg-blue-100 hover:text-blue-700 hover:translate-x-1">
-                Ongoing Projects
-            </button>
-
-            <button (click)="setSection('pending')"
-                [ngClass]="menuClass('pending')"
-                class="w-full text-left px-4 py-2 rounded-lg transition-all duration-300
-                       hover:bg-blue-100 hover:text-blue-700 hover:translate-x-1">
-                Pending
-            </button>
-
-        </div>
-    </div>
-
-    <!-- BOTTOM -->
-    <div>
-        <button (click)="setSection('account')"
-            class="w-full text-left px-4 py-2 rounded-lg border-t pt-4
-                   transition-all duration-300
-                   hover:bg-blue-100 hover:text-blue-700 hover:translate-x-1">
-            My Account
-        </button>
-    </div>
-
-</div>
-
-    <!-- MAIN -->
-    <div class="flex-1 p-8">
-
-        <!-- HEADER -->
-        <div class="mb-6">
-            <h1 class="text-3xl font-bold text-blue-700">Employee Dashboard</h1>
-            <p class="text-gray-500">Welcome, {{userName}}</p>
-        </div>
-
-        <!-- DASHBOARD -->
-        <div *ngIf="activeSection === 'dashboard'">
-
-            <!-- PROFILE -->
-            <div class="bg-white rounded-2xl shadow p-6 grid grid-cols-2 md:grid-cols-4 gap-6 mb-6">
-                <div><p class="text-xs text-gray-400">User ID</p><p>{{userId}}</p></div>
-                <div><p class="text-xs text-gray-400">Name</p><p>{{userName}}</p></div>
-                <div><p class="text-xs text-gray-400">Role</p><p>{{userRole}}</p></div>
-                <div><p class="text-xs text-gray-400">Email</p><p>{{userEmail}}</p></div>
+            <div class="flex items-center gap-2 bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-[10px] font-black tracking-wider border border-blue-100">
+                <span class="w-2 h-2 bg-blue-600 rounded-full"></span>
+                ENCRYPTED SESSION
             </div>
 
-            <!-- CLIENT REQUESTS -->
-            <div class="bg-white rounded-2xl shadow p-6">
+            <div class="text-right">
+                <p class="text-[9px] font-black text-gray-400 uppercase tracking-widest">LOGGED IN AS</p>
+                <p class="text-xs font-bold text-gray-700 uppercase">{{userName}}</p>
+            </div>
 
-                <h2 class="text-xl font-semibold mb-6 text-gray-700">Client Requests</h2>
+            <button (click)="logout()"
+                class="bg-blue-700 text-white px-5 py-1.5 rounded-md text-xs font-black italic uppercase hover:bg-blue-800 transition-all shadow-sm">
+                LOGOUT
+            </button>
 
-                <div *ngIf="loading" class="text-gray-400">Loading...</div>
+        </div>
+    </nav>
 
-                <div *ngIf="!loading && clientRequests.length > 0"
-     class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <!-- 🔷 MAIN -->
+    <div class="flex flex-1">
 
-    <div *ngFor="let req of clientRequests; let i = index"
-    (click)="openRequestDetails(req)"
-         [ngClass]="getCardColor(i)"
-         class="relative p-6 rounded-2xl text-white shadow-lg
-                overflow-hidden
-                transform transition duration-300 ease-in-out
-                hover:scale-105 hover:shadow-2xl hover:-translate-y-1 cursor-pointer">
+        <!-- SIDEBAR -->
+        <div class="w-64 bg-white shadow-lg flex flex-col p-4 justify-between">
 
-        <!-- GLASS OVERLAY -->
-        <div class="absolute inset-0 bg-white/10 backdrop-blur-sm rounded-2xl"></div>
+            <div>
+                <div class="flex items-center gap-3 mb-8">
+                    <div class="bg-blue-600 text-white w-10 h-10 flex items-center justify-center rounded-full font-black italic">
+                        E
+                    </div>
+                    <h2 class="text-sm font-black italic uppercase tracking-tight text-gray-700">Employee Hub</h2>
+                </div>
+
+                <div class="space-y-2">
+
+                    <button (click)="setSection('dashboard')" [ngClass]="menuClass('dashboard')"
+                        class="w-full text-left px-4 py-2 rounded-lg text-[11px] font-black italic uppercase tracking-wide hover:bg-blue-100">
+                        Dashboard
+                    </button>
+
+                    <button (click)="setSection('ongoing')" [ngClass]="menuClass('ongoing')"
+                        class="w-full text-left px-4 py-2 rounded-lg text-[11px] font-black italic uppercase tracking-wide hover:bg-blue-100">
+                        Ongoing Projects
+                    </button>
+
+                    <button (click)="setSection('pending')" [ngClass]="menuClass('pending')"
+                        class="w-full text-left px-4 py-2 rounded-lg text-[11px] font-black italic uppercase tracking-wide hover:bg-blue-100">
+                        Pending
+                    </button>
+
+                    <button (click)="setSection('analytics')" [ngClass]="menuClass('analytics')"
+                        class="w-full text-left px-4 py-2 rounded-lg text-[11px] font-black italic uppercase tracking-wide hover:bg-blue-100">
+                        Analytics
+                    </button>
+
+                </div>
+            </div>
+
+            <button (click)="setSection('account')"
+                class="w-full text-left px-4 py-2 rounded-lg text-[11px] font-black italic uppercase tracking-wide hover:bg-blue-100">
+                My Account
+            </button>
+
+        </div>
 
         <!-- CONTENT -->
-        <div class="relative z-10">
+        <div class="flex-1 p-8">
 
-            <!-- TITLE -->
-            <h3 class="text-xl font-semibold leading-snug">
-                {{req.title}}
-            </h3>
+            <h1 class="w-full text-left py-2 rounded-lg text-[11px] font-black italic uppercase tracking-wide hover:bg-blue-100">Employee Dashboard</h1>
+            <p class="text-xs font-bold text-gray-400 uppercase tracking-[0.15em] mb-6">Welcome, {{userName}}</p>
 
-            <!-- DESCRIPTION -->
-            <p class="text-sm mt-3 opacity-90 leading-relaxed">
-                {{req.description || 'No description provided'}}
-            </p>
+            <!-- DASHBOARD -->
+            <div *ngIf="activeSection === 'dashboard'">
 
-            <!-- FOOTER -->
-            <div class="flex items-center justify-between mt-5">
-
-                <!-- STATUS -->
-                <span class="text-xs font-medium px-3 py-1 rounded-full bg-white/20">
-                    {{req.status | uppercase}}
-                </span>
-
-                <!-- DATE -->
-                <span class="text-xs opacity-90">
-                    📅 {{ formatDate(req.deadline) }}
-                </span>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-
-                <div *ngIf="!loading && clientRequests.length === 0"
-                     class="text-gray-400 text-center">
-                    No Requests
+                <div class="bg-white rounded-2xl shadow p-6 grid grid-cols-2 md:grid-cols-4 gap-6 mb-6">
+                    <div><p class="text-[9px] font-black text-gray-400 uppercase tracking-widest">User ID</p><p class="text-sm font-bold text-gray-800">{{userId}}</p></div>
+                    <div><p class="text-[9px] font-black text-gray-400 uppercase tracking-widest">Name</p><p class="text-sm font-bold text-gray-800">{{userName}}</p></div>
+                    <div><p class="text-[9px] font-black text-gray-400 uppercase tracking-widest">Role</p><p class="text-sm font-bold text-gray-800">{{userRole}}</p></div>
+                    <div><p class="text-[9px] font-black text-gray-400 uppercase tracking-widest">Email</p><p class="text-sm font-bold text-gray-800">{{userEmail}}</p></div>
                 </div>
 
-            </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div *ngFor="let req of clientRequests; let i = index"
+                        (click)="openRequestDetails(req)"
+                        [ngClass]="getCardColor(i)"
+                        class="p-6 rounded-2xl text-white shadow-lg cursor-pointer hover:scale-105 transition">
 
-        </div>
+                        <h3 class="text-lg font-black italic uppercase tracking-tight">{{req.title}}</h3>
+                        <p class="text-xs mt-2 opacity-90">{{req.description}}</p>
 
-        <!-- ONGOING -->
-        <div *ngIf="activeSection === 'ongoing'">
-            <div class="bg-white p-6 rounded-2xl shadow">
-                <h2 class="text-xl font-semibold mb-4">Ongoing Projects</h2>
-
-                <div *ngFor="let req of clientRequests">
-                    <div *ngIf="req.status === 'accepted'"
-                         class="border-b py-3">
-                        <p class="font-medium">{{req.title}}</p>
-                        <p class="text-sm text-gray-400">
-                            Due: {{ formatDate(req.deadline) }}
-                        </p>
+                        <div class="flex justify-between mt-4 text-[10px] font-black uppercase tracking-wider">
+                            <span class="bg-white/20 px-2 py-1 rounded">
+                                {{req.status}}
+                            </span>
+                            <span>📅 {{ formatDate(req.deadline) }}</span>
+                        </div>
                     </div>
                 </div>
-
             </div>
+            <!-- 🔄 ONGOING PROJECTS -->
+<div *ngIf="activeSection === 'ongoing'">
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- CARD 1 -->
+        <div class="p-6 rounded-2xl text-white shadow-lg hover:scale-105 transition
+                    bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800">
+
+            <h3 class="text-lg font-black italic uppercase">Employee Dashboard</h3>
+            <p class="text-xs mt-2 opacity-90">
+                Building internal dashboard with analytics and reporting.
+            </p>
+
+            <div class="mt-4">
+                <div class="w-full bg-white/20 rounded-full h-2">
+                    <div class="bg-white h-2 rounded-full w-[70%]"></div>
+                </div>
+                <p class="text-[9px] mt-1 font-bold uppercase">Progress: 70%</p>
+            </div>
+
+            <div class="flex justify-between mt-4 text-[10px] font-black uppercase">
+                <span class="bg-white/20 px-2 py-1 rounded">In Progress</span>
+                <span>📅 10 Apr 2026</span>
+            </div>
+
         </div>
 
-        <!-- PENDING -->
-        <div *ngIf="activeSection === 'pending'">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- CARD 2 -->
+        <div class="p-6 rounded-2xl text-white shadow-lg hover:scale-105 transition
+                    bg-gradient-to-br from-indigo-600 via-indigo-700 to-indigo-800">
 
-    <div *ngFor="let req of clientRequests; let i = index">
+            <h3 class="text-lg font-black italic uppercase">E-Commerce Platform</h3>
+            <p class="text-xs mt-2 opacity-90">
+                Developing full-stack shopping platform with payments.
+            </p>
 
-        <div *ngIf="req.status !== 'accepted'"
-             [ngClass]="getCardColor(i)"
-             (click)="openRequestDetails(req)"
-             class="relative p-6 rounded-2xl text-white shadow-lg
-                    overflow-hidden
-                    transform transition duration-300 ease-in-out
-                    hover:scale-105 hover:shadow-2xl hover:-translate-y-1 cursor-pointer">
-
-            <!-- GLASS OVERLAY -->
-            <div class="absolute inset-0 bg-white/10 backdrop-blur-sm rounded-2xl"></div>
-
-            <!-- CONTENT -->
-            <div class="relative z-10">
-
-                <!-- TITLE -->
-                <h3 class="text-xl font-semibold leading-snug">
-                    {{req.title}}
-                </h3>
-
-                <!-- DESCRIPTION -->
-                <p class="text-sm mt-3 opacity-90 leading-relaxed">
-                    {{req.description || 'No description provided'}}
-                </p>
-
-                <!-- FOOTER -->
-                <div class="flex items-center justify-between mt-5">
-
-                    <!-- STATUS -->
-                    <span class="text-xs font-medium px-3 py-1 rounded-full bg-white/20">
-                        {{req.status | uppercase}}
-                    </span>
-
-                    <!-- DATE -->
-                    <span class="text-xs opacity-90">
-                        📅 {{ formatDate(req.deadline) }}
-                    </span>
-
+            <div class="mt-4">
+                <div class="w-full bg-white/20 rounded-full h-2">
+                    <div class="bg-white h-2 rounded-full w-[50%]"></div>
                 </div>
+                <p class="text-[9px] mt-1 font-bold uppercase">Progress: 50%</p>
+            </div>
 
+            <div class="flex justify-between mt-4 text-[10px] font-black uppercase">
+                <span class="bg-white/20 px-2 py-1 rounded">In Progress</span>
+                <span>📅 15 Apr 2026</span>
+            </div>
+
+        </div>
+
+        <!-- CARD 3 -->
+        <div class="p-6 rounded-2xl text-white shadow-lg hover:scale-105 transition
+                    bg-gradient-to-br from-purple-600 via-purple-700 to-purple-800">
+
+            <h3 class="text-lg font-black italic uppercase">Mobile App UI</h3>
+            <p class="text-xs mt-2 opacity-90">
+                Designing modern UI for Android & iOS application.
+            </p>
+
+            <div class="mt-4">
+                <div class="w-full bg-white/20 rounded-full h-2">
+                    <div class="bg-white h-2 rounded-full w-[85%]"></div>
+                </div>
+                <p class="text-[9px] mt-1 font-bold uppercase">Progress: 85%</p>
+            </div>
+
+            <div class="flex justify-between mt-4 text-[10px] font-black uppercase">
+                <span class="bg-white/20 px-2 py-1 rounded">In Progress</span>
+                <span>📅 08 Apr 2026</span>
             </div>
 
         </div>
@@ -205,105 +190,89 @@
     </div>
 
 </div>
-        </div>
+            <!-- ✅ PENDING (FIXED COLORS) -->
+            <div *ngIf="activeSection === 'pending'">
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    
+                    <div *ngFor="let req of clientRequests; let i = index">
+                        <div *ngIf="req.status !== 'accepted'"
+                            (click)="openRequestDetails(req)"
+                            [ngClass]="getPendingCardColor(req.status, i)"
+                            class="p-6 rounded-2xl text-white shadow-lg cursor-pointer hover:scale-105 transition">
 
-        <!-- ACCOUNT -->
-        <div *ngIf="activeSection === 'account'">
-    <div class="max-w-xl mx-auto">
+                            <h3 class="text-lg font-black italic uppercase tracking-tight">{{req.title}}</h3>
+                            <p class="text-xs mt-2 opacity-90">{{req.description}}</p>
 
-        <!-- PROFILE CARD -->
-        <div class="bg-white rounded-2xl shadow-lg p-8 
-                    transform transition duration-300 hover:shadow-2xl hover:-translate-y-1">
+                            <div class="flex justify-between mt-4 text-[10px] font-black uppercase tracking-wider">
+                                <span class="bg-white/20 px-2 py-1 rounded">
+                                    {{req.status}}
+                                </span>
+                                <span>📅 {{ formatDate(req.deadline) }}</span>
+                            </div>
+                        </div>
+                    </div>
 
-            <!-- HEADER -->
-            <div class="text-center mb-6">
-                <h2 class="text-2xl font-semibold text-gray-700">
-                    {{userName}}
+                </div>
+            </div>
+            
+            <!-- ANALYTICS -->
+            <div *ngIf="activeSection === 'analytics'">
+
+                <h2 class="flex justify-between mt-4 text-[10px] font-black uppercase tracking-wider">
+                    Task Analytics
                 </h2>
 
-                <p class="text-sm text-gray-400">
-                    {{userRole}}
-                </p>
+                <div class="grid md:grid-cols-2 gap-6">
+
+                    <div class="bg-white p-6 rounded-xl shadow">
+                        <canvas id="statusChart"></canvas>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-xl shadow">
+                        <canvas id="barChart"></canvas>
+                    </div>
+
+                </div>
             </div>
 
-            <!-- DETAILS -->
-            <div class="space-y-4">
+            <!-- ACCOUNT (ADVANCED UI) -->
+             <div *ngIf="activeSection === 'account'" class="max-w-3xl mx-auto">
+                <div class="bg-white rounded-[2rem] shadow-xl overflow-hidden border border-gray-100">
+                    <div class="bg-gradient-to-br from-[#0047AB] to-blue-800 p-8 text-white">
+                        <h2 class="text-3xl font-black italic uppercase tracking-tighter">{{userName}}</h2>
+                        <p class="text-xs font-bold opacity-80 uppercase tracking-widest mt-1">{{userRole}} • ID: {{userId}}</p>
+                    </div>
 
-                <div class="flex justify-between items-center border-b pb-2">
-                    <span class="text-gray-500 text-sm">User ID</span>
-                    <span class="font-medium text-gray-700">{{userId}}</span>
+                    <div class="p-8">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
+                                <p class="text-[9px] font-black text-gray-400 uppercase tracking-widest">Department</p>
+                                <p class="text-sm font-bold text-gray-700">Software Development</p>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
+                                <p class="text-[9px] font-black text-gray-400 uppercase tracking-widest">Location</p>
+                                <p class="text-sm font-bold text-gray-700">Chennai, India</p>
+                            </div>
+                        </div>
+
+                        <div class="mt-8 grid grid-cols-2 gap-4">
+                            <button class="bg-gray-900 text-white py-3 rounded-xl text-[11px] font-black italic uppercase tracking-widest hover:bg-black transition-all">
+                                🔐 Reset Password
+                            </button>
+                            <button (click)="logout()" class="bg-red-600 text-white py-3 rounded-xl text-[11px] font-black italic uppercase tracking-widest hover:bg-red-700 transition-all">
+                                🚪 Logout
+                            </button>
+                        </div>
+                    </div>
                 </div>
-
-                <div class="flex justify-between items-center border-b pb-2">
-                    <span class="text-gray-500 text-sm">Email</span>
-                    <span class="font-medium text-gray-700 truncate">{{userEmail}}</span>
-                </div>
-
-                <div class="flex justify-between items-center border-b pb-2">
-                    <span class="text-gray-500 text-sm">Role</span>
-                    <span class="font-medium text-gray-700">{{userRole}}</span>
-                </div>
-
             </div>
-
-            <!-- BUTTON -->
-            <button class="mt-6 w-full bg-blue-600 text-white py-2 rounded-lg 
-                           hover:bg-blue-700 transition duration-300">
-                Edit Profile
-            </button>
-
         </div>
-
-    </div>
-</div>
-
-    </div>
-    <div *ngIf="showDetails"
-     class="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-
-    <!-- MODAL -->
-    <div class="bg-white w-full max-w-lg rounded-2xl shadow-2xl p-6 relative
-                transform transition duration-300 scale-100">
-
-        <!-- CLOSE BUTTON -->
-        <button (click)="closeDetails()"
-                class="absolute top-3 right-3 text-gray-400 hover:text-gray-700 text-xl">
-            ✕
-        </button>
-
-        <!-- TITLE -->
-        <h2 class="text-2xl font-semibold text-gray-800 mb-4">
-            {{selectedRequest?.title}}
-        </h2>
-
-        <!-- DESCRIPTION -->
-        <p class="text-gray-600 mb-4 leading-relaxed">
-            {{selectedRequest?.description}}
-        </p>
-
-        <!-- DETAILS -->
-        <div class="space-y-3 text-sm">
-
-            <div class="flex justify-between border-b pb-2">
-                <span class="text-gray-500">Status</span>
-                <span class="font-medium">{{selectedRequest?.status}}</span>
-            </div>
-
-            <div class="flex justify-between border-b pb-2">
-                <span class="text-gray-500">Deadline</span>
-                <span class="font-medium">
-                    {{ formatDate(selectedRequest?.deadline) }}
-                </span>
-            </div>
-
-            <div class="flex justify-between border-b pb-2">
-                <span class="text-gray-500">Assigned To</span>
-                <span class="font-medium">{{selectedRequest?.assignedTo}}</span>
-            </div>
-
-        </div>
-
     </div>
 
-</div>
+    <!-- FOOTER -->
+    <footer class="bg-gray-50 border-t px-6 py-3 flex justify-between text-[9px] font-black text-gray-400 uppercase tracking-[0.2em]">
+        <div>© 2026 <span class="text-gray-900 font-black">MAZ SOFTWARE</span></div>
+        <div>IDENTITY: <span class="text-blue-600 font-black">{{userEmail}}</span></div>
+    </footer>
+
 </div>
