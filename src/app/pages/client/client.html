@@ -1,0 +1,324 @@
+<div class="h-screen w-screen flex flex-col bg-[#f8fafc] overflow-hidden selection:bg-blue-100">
+
+  <nav class="h-16 bg-white border-b border-slate-200 px-4 md:px-8 flex justify-between items-center z-[100] shrink-0">
+    <div class="flex items-center gap-3 md:gap-4">
+      <div class="w-8 h-8 md:w-9 md:h-9 bg-[#0046ad] rounded-xl shadow-lg flex items-center justify-center text-white font-black text-base md:text-lg">M</div>
+      <div class="flex flex-col">
+        <span class="font-black text-slate-800 tracking-tighter uppercase italic text-xs md:text-sm leading-none whitespace-nowrap">MAZ Software</span>
+        <span class="hidden sm:block text-[8px] md:text-[9px] font-bold text-slate-400 uppercase tracking-[0.2em] mt-1">Management System</span>
+      </div>
+    </div>
+    <div class="flex items-center gap-2 md:gap-6">
+      <div class="hidden md:flex items-center gap-2 px-4 py-1.5 bg-blue-50 border border-blue-100 rounded-full">
+        <span class="w-2 h-2 bg-[#0046ad] rounded-full animate-pulse"></span>
+        <p class="text-[10px] font-black text-[#0046ad] uppercase tracking-widest whitespace-nowrap">Encrypted Session</p>
+      </div>
+      <div class="text-right hidden sm:block">
+        <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest leading-none">Logged in as</p>
+        <p class="text-xs md:text-sm font-bold text-slate-800 tracking-tight">{{userData?.firstName}} {{userData?.lastName}}</p>
+      </div>
+      <button (click)="logout()" class="px-3 md:px-5 py-2 rounded-xl bg-[#0046ad] text-white text-[9px] md:text-[10px] font-black uppercase tracking-widest shadow-lg active:scale-[0.97] transition-all whitespace-nowrap">Logout</button>
+    </div>
+  </nav>
+
+  <div class="flex flex-1 overflow-hidden flex-col lg:flex-row">
+    
+    <aside class="w-full lg:w-72 bg-white border-b lg:border-b-0 lg:border-r border-slate-200 flex flex-col shrink-0 lg:h-full shadow-sm z-10">
+      <div class="p-4 lg:p-8 overflow-x-auto lg:overflow-y-auto custom-scrollbar">
+        <h3 class="hidden lg:block text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-6">Client Portal</h3>
+        <nav class="flex lg:flex-col gap-2 min-w-max lg:min-w-0">
+          <button *ngFor="let section of sections" (click)="setSection(section.id)"
+            [class]="activeSection === section.id ? 'bg-[#0046ad] text-white shadow-lg' : 'text-slate-500 hover:bg-slate-50'"
+            class="flex-1 lg:w-full flex items-center gap-3 px-4 lg:px-5 py-3 lg:py-4 rounded-xl lg:rounded-2xl text-[9px] md:text-[10px] font-black uppercase tracking-widest transition-all text-left whitespace-nowrap">
+            {{ section.label }}
+          </button>
+        </nav>
+      </div>
+      <div class="hidden lg:block mt-auto p-8 border-t border-slate-100 bg-slate-50/50">
+        <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest leading-relaxed">Support Access:<br>support@maz.com</p>
+      </div>
+    </aside>
+
+    <main class="flex-1 p-4 md:p-8 lg:p-12 overflow-y-auto bg-[#f8fafc] custom-scrollbar">
+
+      <div *ngIf="activeSection === 'home'" class="animate-in fade-in slide-in-from-bottom-4 duration-700">
+        <header class="mb-8 md:mb-12 text-center lg:text-left">
+          <h1 class="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter italic uppercase leading-none">Welcome <br><span class="text-[#0046ad]">{{userData?.firstName || 'Client'}}</span></h1>
+          <p class="text-slate-400 font-bold text-[9px] md:text-[11px] uppercase tracking-[0.3em] mt-6 flex justify-center lg:justify-start items-center gap-3"><span class="w-12 h-[1px] bg-[#0046ad]"></span> CLIENT OPERATIONS CONTROL PANEL</p>
+        </header>
+        <div class="bg-white border border-slate-200 rounded-[2rem] md:rounded-[3.5rem] p-8 md:p-14 shadow-sm border-l-[12px] md:border-l-[16px] border-l-[#0046ad]">
+          <h2 class="text-xl md:text-3xl font-black text-slate-800 mb-4 md:mb-6 uppercase tracking-tight">Unified Client Operations</h2>
+          <div class="space-y-3">
+
+<p class="text-slate-500 text-base md:text-xl font-medium leading-relaxed">
+Deploy project requests, supervise execution pipelines, and observe real-time operational intelligence across your secured MAZ infrastructure workspace.
+</p>
+
+<div class="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-[#0046ad]">
+
+<span class="status-dot"></span>
+<span class="status-dot delay-1"></span>
+<span class="status-dot delay-2"></span>
+
+<span class="ml-2">Live System Sync Active</span>
+
+</div>
+
+</div>
+        </div>
+      </div>
+
+      <div *ngIf="activeSection === 'profile'" class="space-y-6 md:space-y-10 animate-in fade-in duration-500">
+        <h2 class="text-3xl md:text-4xl font-black text-slate-900 tracking-tighter italic uppercase">Identity <span class="text-[#0046ad]">Profile</span></h2>
+        <div class="bg-white border border-slate-200 rounded-[2rem] md:rounded-[3.5rem] p-8 md:p-12 shadow-sm">
+          <div class="flex flex-col xl:flex-row gap-10 xl:gap-16 items-center xl:items-start">
+            <div class="flex flex-col items-center gap-3 shrink-0">
+
+  <div class="w-32 h-32 md:w-40 md:h-40 rounded-[2rem] md:rounded-[3rem] bg-slate-50 border border-slate-100 flex items-center justify-center text-5xl font-black text-[#0046ad] overflow-hidden shadow-inner">
+
+    <img *ngIf="userData?.photoURL"
+         [src]="userData.photoURL"
+         class="w-full h-full object-cover"/>
+
+    <span *ngIf="!userData?.photoURL"
+          class="uppercase">
+      {{userData?.firstName?.charAt(0)}}{{userData?.lastName?.charAt(0)}}
+    </span>
+
+  </div>
+
+  <!-- REMOVE PHOTO BUTTON -->
+
+  <button
+  *ngIf="userData?.photoURL"
+  (click)="removeProfilePhoto()"
+  class="px-5 py-2.5 bg-[#0046ad] text-white rounded-xl text-[9px] md:text-[10px] font-black uppercase tracking-widest shadow-lg active:scale-[0.97] transition-all whitespace-nowrap">
+
+  Remove Profile Photo
+
+</button>
+
+</div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-y-10 gap-x-12 w-full">
+             <div *ngFor="let field of [
+  {l:'First Name', v:userData?.firstName},
+  {l:'Middle Name', v:userData?.middleName},
+  {l:'Last Name', v:userData?.lastName},
+  {l:'Email Address', v:userData?.email},
+  {l:'Primary Contact', v:userData?.phone},
+  {l:'Secondary Contact', v:userData?.altPhone},
+  {l:'Date of Birth', v:userData?.dob},
+  {l:'Gender Identity', v:userData?.gender}
+]" class="space-y-1">
+
+  <p class="text-[9px] md:text-[10px] font-black text-slate-400 uppercase tracking-widest">
+    {{field.l}}
+  </p>
+
+  <p class="font-bold text-slate-800 tracking-tight text-base md:text-lg break-all normal-case">
+    {{field.v || '—'}}
+  </p>
+
+</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="activeSection === 'edit'" class="max-w-5xl animate-in zoom-in-95 duration-300">
+        <div class="bg-white border border-slate-200 rounded-[2rem] md:rounded-[3.5rem] p-8 md:p-12 shadow-sm">
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10 gap-6 pb-8 border-b border-slate-100">
+            <h2 class="text-2xl md:text-3xl font-black text-slate-900 italic uppercase leading-none">Modify <span class="text-[#0046ad]">Identity</span></h2>
+            <button (click)="sendPasswordResetLink()" class="w-full sm:w-auto px-6 py-4 bg-[#0046ad] text-white rounded-2xl text-[10px] font-black uppercase tracking-widest shadow-lg shadow-blue-700/20 active:scale-95 transition-all">🔐 Request Password Reset</button>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+            <div class="space-y-1"><label class="text-[10px] md:text-[11px] font-black text-slate-500 uppercase tracking-widest ml-1">First Name</label><input [(ngModel)]="profileForm.firstName" class="client-input"></div>
+            <div class="space-y-1"><label class="text-[10px] md:text-[11px] font-black text-slate-500 uppercase tracking-widest ml-1">Middle Name</label><input [(ngModel)]="profileForm.middleName" class="client-input"></div>
+            <div class="space-y-1"><label class="text-[10px] md:text-[11px] font-black text-slate-500 uppercase tracking-widest ml-1">Last Name</label><input [(ngModel)]="profileForm.lastName" class="client-input"></div>
+            <div class="space-y-1 md:col-span-2"><label class="text-[10px] md:text-[11px] font-black text-slate-500 uppercase tracking-widest ml-1">Email ID (Protocol Restricted)</label><input [value]="profileForm.email" readonly class="client-input opacity-50 italic"></div>
+            <div class="space-y-1"><label class="text-[10px] md:text-[11px] font-black text-slate-500 uppercase tracking-widest ml-1">Gender</label><select [(ngModel)]="profileForm.gender" class="client-input"><option value="">Select</option><option>Male</option><option>Female</option><option>Other</option></select></div>
+            <div class="space-y-1"><label class="text-[10px] md:text-[11px] font-black text-slate-500 uppercase tracking-widest ml-1">Date of Birth</label><input type="date" [(ngModel)]="profileForm.dob" class="client-input"></div>
+            
+            <div class="space-y-1"><label class="text-[10px] md:text-[11px] font-black text-slate-500 uppercase tracking-widest ml-1">Phone</label>
+              <div class="flex gap-2"><select [(ngModel)]="profileForm.countryCode" class="client-input !w-[75px] md:!w-[90px] px-1 md:px-2"><option value="+91">+91</option><option value="+1">+1</option></select>
+              <input maxlength="10" [(ngModel)]="profileForm.phone" (input)="validatePhone('phone')" (keydown)="allowOnlyNumbers($event)" class="client-input flex-1 min-w-0"></div></div>
+            
+            <div class="space-y-1"><label class="text-[10px] md:text-[11px] font-black text-slate-500 uppercase tracking-widest ml-1">Alt Phone</label>
+              <div class="flex gap-2"><select [(ngModel)]="profileForm.altCountryCode" class="client-input !w-[75px] md:!w-[90px] px-1 md:px-2"><option value="+91">+91</option><option value="+1">+1</option></select>
+              <input maxlength="10" [(ngModel)]="profileForm.altPhone" (input)="validatePhone('altPhone')" (keydown)="allowOnlyNumbers($event)" class="client-input flex-1 min-w-0"></div></div>
+
+            <div class="md:col-span-3 space-y-3"><label class="text-[10px] md:text-[11px] font-black text-slate-500 uppercase tracking-widest ml-1">Identity Image Protocol</label><input type="file" (change)="onPhotoSelected($event)" class="client-input py-4 text-[10px] font-medium cursor-pointer"></div>
+          </div>
+          <button (click)="saveProfile()" class="w-full mt-10 md:mt-12 py-5 md:py-6 bg-[#0046ad] text-white rounded-[1.5rem] md:rounded-[2rem] font-black uppercase text-xs tracking-[0.2em] shadow-2xl active:scale-[0.98] transition-all">Synchronize Profile Logic</button>
+        </div>
+      </div>
+
+      <div *ngIf="activeSection === 'company'" class="max-w-4xl animate-in fade-in duration-500">
+        <div class="bg-white border border-slate-200 rounded-[2rem] md:rounded-[3.5rem] p-8 md:p-12 shadow-sm">
+          <h2 class="text-3xl font-black text-slate-900 mb-10 italic uppercase leading-none">Company <span class="text-[#0046ad]">Metadata</span></h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+            <div class="space-y-1"><label class="text-[10px] font-black text-slate-500 uppercase ml-1">Legal Entity Name</label><input [(ngModel)]="companyForm.companyName" class="client-input" placeholder="e.g. MAZ Software"></div>
+            <div class="space-y-1"><label class="text-[10px] font-black text-slate-500 uppercase ml-1">Corporate Role</label><input [(ngModel)]="companyForm.designation" class="client-input" placeholder="e.g. CTO"></div>
+            <div class="space-y-1"><label class="text-[10px] font-black text-slate-500 uppercase ml-1">Industry Type</label><select [(ngModel)]="companyForm.industry" class="client-input"><option value="">Select</option><option>IT Services</option><option>Healthcare</option><option>Finance</option></select></div>
+            <div class="space-y-1"><label class="text-[10px] font-black text-slate-500 uppercase ml-1">Digital Domain</label><input [(ngModel)]="companyForm.website" class="client-input" placeholder="www.domain.com"></div>
+            <div class="space-y-1"><label class="text-[10px] font-black text-slate-500 uppercase ml-1">GST Identification</label><input [(ngModel)]="companyForm.gst" class="client-input" placeholder="GST Number (Optional)"></div>
+            <div class="space-y-1"><label class="text-[10px] font-black text-slate-500 uppercase ml-1">Organization Size</label><select [(ngModel)]="companyForm.size" class="client-input"><option value="">Select</option><option>Startup</option><option>SME</option><option>Enterprise</option></select></div>
+          </div>
+          <button (click)="saveCompany()" class="w-full mt-12 py-5 bg-[#0046ad] text-white rounded-[1.5rem] md:rounded-[2rem] font-black uppercase text-xs shadow-xl active:scale-[0.98]">Commit Company Details</button>
+        </div>
+      </div>
+
+      <div *ngIf="activeSection === 'address'" class="max-w-4xl animate-in fade-in duration-500">
+        <div class="bg-white border border-slate-200 rounded-[2rem] md:rounded-[3.5rem] p-8 md:p-12 shadow-sm">
+          <h2 class="text-3xl font-black text-slate-900 mb-10 italic uppercase leading-none">Operational <span class="text-[#0046ad]">Address Setup</span></h2>
+          <div class="space-y-6">
+            <div class="space-y-1"><label class="text-[10px] font-black text-slate-500 uppercase ml-1">Primary Dispatch Address</label><input [(ngModel)]="addressForm.address1" class="client-input"></div>
+            <div class="space-y-1"><label class="text-[10px] font-black text-slate-500 uppercase ml-1">Secondary Identification</label><input [(ngModel)]="addressForm.address2" class="client-input"></div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <select
+[(ngModel)]="addressForm.state"
+(change)="onStateChange()"
+class="client-input text-slate-800">
+
+<option value="">Select State</option>
+
+<option *ngFor="let state of indianStates" [value]="state">
+{{ state }}
+</option>
+
+</select>
+<select
+[(ngModel)]="addressForm.city"
+class="client-input text-slate-800"
+[disabled]="!addressForm.state">
+
+<option value="">Select City</option>
+
+<option *ngFor="let city of getCitiesForSelectedState()" [value]="city">
+{{ city }}
+</option>
+
+</select>
+              <input [(ngModel)]="addressForm.country" placeholder="Country" class="client-input">
+              <input
+  [(ngModel)]="addressForm.pin"
+  placeholder="PIN"
+  maxlength="6"
+  (input)="validatePIN()"
+  (keydown)="allowOnlyNumbers($event)"
+  class="client-input">
+            </div>
+          </div>
+          <button (click)="saveAddress()" class="w-full mt-12 py-5 bg-[#0046ad] text-white rounded-[1.5rem] md:rounded-[2rem] font-black uppercase text-xs shadow-xl">Commit Physical Data</button>
+        </div>
+      </div>
+
+      <div *ngIf="activeSection === 'request'" class="max-w-5xl animate-in slide-in-from-right-4 duration-500">
+        <div class="bg-white border border-slate-200 rounded-[3rem] md:rounded-[4rem] p-8 md:p-14 shadow-sm border-t-[12px] md:border-t-[16px] border-t-[#0046ad]">
+          <h2 class="text-3xl md:text-4xl font-black text-slate-900 mb-10 md:mb-12 italic uppercase leading-none">Demand <span class="text-[#0046ad]">Initialization</span></h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+            <div class="md:col-span-2 space-y-1"><label class="text-[10px] md:text-[11px] font-black text-slate-500 uppercase ml-1">Requirement Title</label><input [(ngModel)]="requestForm.title" class="client-input py-5"></div>
+            <div class="md:col-span-2 space-y-1"><label class="text-[10px] md:text-[11px] font-black text-slate-500 uppercase ml-1">Technical Specifications</label><textarea [(ngModel)]="requestForm.description" class="client-input h-32 md:h-40 py-5"></textarea></div>
+            <input [(ngModel)]="requestForm.purpose" placeholder="Strategic Purpose" class="client-input">
+            <select [(ngModel)]="requestForm.type" class="client-input"><option value="">Architecture Type</option><option>WEB APP</option><option>ANDROID APP</option><option>IOS APP</option></select>
+            <input [(ngModel)]="requestForm.techStack" placeholder="Preferred Stack" class="client-input">
+            <input type="date" [(ngModel)]="requestForm.deadline" class="client-input">
+            <input [(ngModel)]="requestForm.budget" placeholder="Budget Allocation" class="client-input md:col-span-2">
+          </div>
+          <button (click)="createRequest()" class="w-full mt-10 md:mt-12 py-5 md:py-6 bg-[#0046ad] text-white rounded-[1.5rem] md:rounded-[2rem] font-black uppercase text-xs md:text-sm tracking-[0.25em] shadow-2xl active:scale-95 transition-all">Submit Initialization Protocol</button>
+        </div>
+      </div>
+
+      <div *ngIf="activeSection === 'track'" class="animate-in fade-in duration-500">
+        <h2 class="text-3xl md:text-4xl font-black text-slate-900 italic mb-8 md:mb-10 uppercase tracking-tighter leading-none">Request <span class="text-[#0046ad]">Tracking Matrix</span></h2>
+        <div class="bg-white border border-slate-200 rounded-[1.5rem] md:rounded-[3.5rem] overflow-hidden shadow-sm">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left min-w-[700px]">
+              <thead class="bg-slate-50 border-b border-slate-100">
+                <tr><th class="p-6 md:p-8 text-[10px] md:text-[11px] font-black text-slate-400 uppercase tracking-widest">Protocol Token</th><th class="p-6 md:p-8 text-[10px] md:text-[11px] font-black text-slate-400 uppercase tracking-widest">Requirement Title</th><th class="p-6 md:p-8 text-[10px] md:text-[11px] font-black text-slate-400 uppercase tracking-widest text-center">Status</th><th class="p-6 md:p-8 text-[10px] md:text-[11px] font-black text-slate-400 uppercase tracking-widest text-right">Timestamp</th></tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let r of requestList" class="border-b border-slate-50 hover:bg-slate-50 transition-all">
+                  <td class="p-6 md:p-8 font-mono text-[10px] md:text-sm font-bold text-[#0046ad]">{{r.token}}</td>
+                  <td class="p-6 md:p-8 text-slate-700 font-black text-sm md:text-base italic">{{r.title}}</td>
+                  <td class="p-6 md:p-8 text-center">
+                    <span [ngClass]="{
+  'bg-red-100 text-red-700': r.status=='unassigned',
+  'bg-yellow-100 text-yellow-700': r.status=='pending',
+  'bg-green-100 text-green-700': r.status=='completed'
+}"
+class="px-4 py-1.5 rounded-lg text-[8px] md:text-[10px] font-black uppercase tracking-widest">
+  {{r.status}}
+</span>
+                  </td>
+                  <td class="p-6 md:p-8 text-[10px] md:text-[11px] font-bold text-slate-400 text-right">
+  {{ r.created_at | date:'MMM d, y • h:mm a' }}
+</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="activeSection === 'documents'" class="max-w-4xl animate-in fade-in duration-500">
+        <div class="bg-white border border-slate-200 rounded-[2rem] md:rounded-[3.5rem] p-8 md:p-12 shadow-sm">
+          <h2 class="text-3xl font-black text-slate-900 mb-6 italic uppercase leading-none">Upload <span class="text-[#0046ad]">Module</span></h2>
+          <p class="text-slate-400 font-bold text-[10px] uppercase tracking-widest mb-10 pb-6 border-b border-slate-100">Synchronized Document Dispatch</p>
+          
+          <label class="text-[11px] font-black text-slate-500 uppercase tracking-widest ml-1 mb-2 block">Protocol Token Selection</label>
+          <select class="client-input mb-10 py-5" [(ngModel)]="selectedToken" (change)="loadUploadedDocuments()"><option value="">Select Target Protocol</option><option *ngFor="let token of eligibleTokens" [value]="token">{{token}}</option></select>
+
+          <div *ngIf="selectedToken" class="space-y-10">
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+              <label *ngFor="let type of ['image', 'pdf', 'video', 'audio']" class="p-6 md:p-8 bg-slate-50 border-2 border-dashed border-slate-200 rounded-[2.5rem] text-center cursor-pointer hover:border-[#0046ad] hover:bg-blue-50 transition-all group">
+                <span class="text-[10px] md:text-[11px] font-black text-slate-500 uppercase tracking-widest group-hover:text-[#0046ad]">Push {{type}}</span>
+                <input type="file" (change)="uploadDocument($event, type)" hidden>
+              </label>
+            </div>
+
+            <div *ngIf="isUploading" class="bg-white p-6 md:p-8 rounded-[2.5rem] border border-slate-200 shadow-xl animate-pulse">
+              <p class="text-[10px] md:text-[11px] font-black text-[#0046ad] uppercase mb-4 tracking-widest">Dispatching {{uploadingType}}...</p>
+              <div class="w-full bg-slate-100 h-2 md:h-3 rounded-full overflow-hidden"><div class="bg-[#0046ad] h-full transition-all duration-300" [style.width.%]="uploadProgress"></div></div>
+              <p class="text-right text-[10px] font-black text-slate-400 mt-2 uppercase">{{uploadProgress}}%</p>
+            </div>
+
+            <div class="pt-10 border-t border-slate-100">
+              <h3 class="text-[11px] font-black text-slate-900 uppercase tracking-widest mb-8">Archive History</h3>
+              <div *ngIf="uploadedDocs.length; else noDocs" class="overflow-hidden rounded-3xl border border-slate-100">
+                <table class="w-full text-left text-sm min-w-[400px]"><thead class="bg-slate-50 text-slate-400 font-black uppercase text-[10px] tracking-widest border-b border-slate-100"><tr><th class="p-6">Data Type</th><th class="p-6">Filename</th></tr></thead>
+                  <tbody><tr *ngFor="let doc of uploadedDocs" class="border-b border-slate-50 hover:bg-slate-50/50"><td class="p-6 uppercase font-black text-[#0046ad] text-[10px] tracking-widest">{{doc.type}}</td><td class="p-6 font-bold text-slate-700">{{doc.name}}</td></tr></tbody></table>
+              </div>
+              <ng-template #noDocs><div class="py-16 bg-slate-50/50 rounded-[3rem] text-center border-2 border-dashed border-slate-100"><p class="text-[11px] font-black text-slate-300 uppercase tracking-widest">Repository Null</p></div></ng-template>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <footer class="h-auto md:h-14 bg-white border-t border-slate-100 px-6 md:px-10 py-4 md:py-0 flex flex-col md:flex-row justify-between items-center shrink-0 z-[100] gap-4">
+
+  <p class="text-[8px] md:text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] text-center md:text-left leading-relaxed">
+    © 2026 MAZ SOFTWARE PRIVATE LIMITED • CLIENT OPERATIONS NODE
+  </p>
+
+  <div class="flex items-center gap-4 md:gap-6">
+
+    <span class="hidden sm:block text-[8px] md:text-[9px] font-black text-slate-300 uppercase tracking-widest italic whitespace-nowrap">
+      Security v4.0 Active
+    </span>
+
+    <span class="hidden md:block w-[1px] h-4 bg-slate-200"></span>
+
+    <div class="flex items-center gap-2 text-[10px] font-black tracking-widest break-all">
+      <span class="text-slate-400 uppercase">Identity:</span>
+      <span class="text-[#0046ad] lowercase">{{ userData?.email }}</span>
+    </div>
+
+  </div>
+
+</footer>
+
+</div>
