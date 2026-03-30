@@ -3,22 +3,12 @@ import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { getStorage } from "firebase/storage";
-
-
-const firebaseConfig = {
-  apiKey: "AIzaSyAWiL89fQqmb9X6lSr0zgjGPskChXZj7eo",
-  authDomain: "crmportal-maz.firebaseapp.com",
-  projectId: "crmportal-maz",
-  storageBucket: "crmportal-maz.appspot.com", // ✅ FIXED
-  messagingSenderId: "464114028302",
-  appId: "1:464114028302:web:8311029c953a2dfcfd115f",
-  measurementId: "G-CDBSM24GG5"
-};
+import { environment } from '../environments/environment';
 
 
 /* INITIALIZE APP FIRST */
 
-const app = initializeApp(firebaseConfig);
+const app = initializeApp(environment.firebase);
 
 
 /* THEN INITIALIZE SERVICES */
