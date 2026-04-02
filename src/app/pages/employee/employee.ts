@@ -107,11 +107,22 @@ export class EmployeeComponent implements OnInit {
 
   if (!statusCanvas || !barCanvas) return;
 
-  // 👉 Use real data if available, otherwise fallback to dummy
   const completed = this.completed || 5;
   const pending = this.pending || 3;
   const ongoing = this.ongoing || 7;
 
+  // ✅ COMMON OPTIONS (RESPONSIVE FIX)
+  const commonOptions = {
+    responsive: true,
+    maintainAspectRatio: false, // ⭐ MOST IMPORTANT
+    plugins: {
+      legend: {
+        position: 'bottom' as const
+      }
+    }
+  };
+
+  // ✅ PIE CHART
   this.statusChart = new Chart(statusCanvas, {
     type: 'pie',
     data: {
@@ -120,9 +131,11 @@ export class EmployeeComponent implements OnInit {
         data: [completed, pending, ongoing],
         backgroundColor: ['#22c55e', '#f59e0b', '#3b82f6']
       }]
-    }
+    },
+    options: commonOptions
   });
 
+  // ✅ BAR CHART
   this.barChart = new Chart(barCanvas, {
     type: 'bar',
     data: {
@@ -134,7 +147,7 @@ export class EmployeeComponent implements OnInit {
       }]
     },
     options: {
-      responsive: true,
+      ...commonOptions,
       scales: {
         y: {
           beginAtZero: true,
@@ -145,6 +158,11 @@ export class EmployeeComponent implements OnInit {
       }
     }
   });
+
+  // ✅ HANDLE WINDOW RESIZE (IMPORTANT)
+  setTimeout(() => {
+    window.dispatchEvent(new Event('resize'));
+  }, 100);
 }
 
   setSection(section: string) {
@@ -212,5 +230,14 @@ export class EmployeeComponent implements OnInit {
 getOngoingCount(): number {
   return this.clientRequests?.filter(req => req.status === 'accepted').length || 0;
 }
+// ✅ ADD THIS
+isSidebarOpen = false;
 
+toggleSidebar() {
+  this.isSidebarOpen = !this.isSidebarOpen;
+}
+
+closeSidebar() {
+  this.isSidebarOpen = false;
+}
 }
