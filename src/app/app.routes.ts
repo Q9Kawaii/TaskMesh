@@ -8,10 +8,13 @@ import { ClientComponent } from './pages/client/client';
 import { authGuard } from './guards/auth.guard';
 import { roleGuard } from './guards/role.guard';
 
+import { DebugDistributionComponent } from './pages/debug-distribution/debug-distribution';
+
 export const routes: Routes = [
 
   { path: '', component: LoginComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'debug-distribution', component: DebugDistributionComponent },
 
   {
     path: 'manager',

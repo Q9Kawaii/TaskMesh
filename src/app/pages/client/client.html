@@ -159,10 +159,37 @@ Deploy project requests, supervise execution pipelines, and observe real-time op
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
             <div class="space-y-1"><label class="text-[10px] font-black text-slate-500 uppercase ml-1">Legal Entity Name</label><input [(ngModel)]="companyForm.companyName" class="client-input" placeholder="e.g. MAZ Software"></div>
             <div class="space-y-1"><label class="text-[10px] font-black text-slate-500 uppercase ml-1">Corporate Role</label><input [(ngModel)]="companyForm.designation" class="client-input" placeholder="e.g. CTO"></div>
-            <div class="space-y-1"><label class="text-[10px] font-black text-slate-500 uppercase ml-1">Industry Type</label><select [(ngModel)]="companyForm.industry" class="client-input"><option value="">Select</option><option>IT Services</option><option>Healthcare</option><option>Finance</option></select></div>
+            <div class="space-y-1">
+  <label class="text-[10px] font-black text-slate-500 uppercase ml-1">Industry Type</label>
+  <select [(ngModel)]="companyForm.industry" class="client-input">
+    <option value="">Select</option>
+    <option>IT Services & Consulting</option>
+    <option>Healthcare & Life Sciences</option>
+    <option>Finance & Banking</option>
+    <option>E-commerce & Retail</option>
+    <option>Education & EdTech</option>
+    <option>Manufacturing & Logistics</option>
+    <option>Real Estate & Construction</option>
+    <option>Media & Entertainment</option>
+    <option>Energy & Utilities</option>
+    <option>Government & Public Sector</option>
+  </select>
+</div>
             <div class="space-y-1"><label class="text-[10px] font-black text-slate-500 uppercase ml-1">Digital Domain</label><input [(ngModel)]="companyForm.website" class="client-input" placeholder="www.domain.com"></div>
             <div class="space-y-1"><label class="text-[10px] font-black text-slate-500 uppercase ml-1">GST Identification</label><input [(ngModel)]="companyForm.gst" class="client-input" placeholder="GST Number (Optional)"></div>
-            <div class="space-y-1"><label class="text-[10px] font-black text-slate-500 uppercase ml-1">Organization Size</label><select [(ngModel)]="companyForm.size" class="client-input"><option value="">Select</option><option>Startup</option><option>SME</option><option>Enterprise</option></select></div>
+            <div class="space-y-1">
+  <label class="text-[10px] font-black text-slate-500 uppercase ml-1">Organization Size</label>
+  <select [(ngModel)]="companyForm.size" class="client-input">
+    <option value="">Select</option>
+    <option>Solopreneur (1)</option>
+    <option>Startup (2-10)</option>
+    <option>Early Stage (11-50)</option>
+    <option>SME (51-200)</option>
+    <option>Mid-Market (201-500)</option>
+    <option>Large Enterprise (501-1000)</option>
+    <option>Global Corporation (1000+)</option>
+  </select>
+</div>
           </div>
           <button (click)="saveCompany()" class="w-full mt-12 py-5 bg-[#0046ad] text-white rounded-[1.5rem] md:rounded-[2rem] font-black uppercase text-xs shadow-xl active:scale-[0.98]">Commit Company Details</button>
         </div>
@@ -214,20 +241,85 @@ class="client-input text-slate-800"
       </div>
 
       <div *ngIf="activeSection === 'request'" class="max-w-5xl animate-in slide-in-from-right-4 duration-500">
-        <div class="bg-white border border-slate-200 rounded-[3rem] md:rounded-[4rem] p-8 md:p-14 shadow-sm border-t-[12px] md:border-t-[16px] border-t-[#0046ad]">
-          <h2 class="text-3xl md:text-4xl font-black text-slate-900 mb-10 md:mb-12 italic uppercase leading-none">Demand <span class="text-[#0046ad]">Initialization</span></h2>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-            <div class="md:col-span-2 space-y-1"><label class="text-[10px] md:text-[11px] font-black text-slate-500 uppercase ml-1">Requirement Title</label><input [(ngModel)]="requestForm.title" class="client-input py-5"></div>
-            <div class="md:col-span-2 space-y-1"><label class="text-[10px] md:text-[11px] font-black text-slate-500 uppercase ml-1">Technical Specifications</label><textarea [(ngModel)]="requestForm.description" class="client-input h-32 md:h-40 py-5"></textarea></div>
-            <input [(ngModel)]="requestForm.purpose" placeholder="Strategic Purpose" class="client-input">
-            <select [(ngModel)]="requestForm.type" class="client-input"><option value="">Architecture Type</option><option>WEB APP</option><option>ANDROID APP</option><option>IOS APP</option></select>
-            <input [(ngModel)]="requestForm.techStack" placeholder="Preferred Stack" class="client-input">
-            <input type="date" [(ngModel)]="requestForm.deadline" class="client-input">
-            <input [(ngModel)]="requestForm.budget" placeholder="Budget Allocation" class="client-input md:col-span-2">
-          </div>
-          <button (click)="createRequest()" class="w-full mt-10 md:mt-12 py-5 md:py-6 bg-[#0046ad] text-white rounded-[1.5rem] md:rounded-[2rem] font-black uppercase text-xs md:text-sm tracking-[0.25em] shadow-2xl active:scale-95 transition-all">Submit Initialization Protocol</button>
+  <div class="bg-white border border-slate-200 rounded-[3rem] md:rounded-[4rem] p-8 md:p-14 shadow-sm border-t-[12px] md:border-t-[16px] border-t-[#0046ad]">
+    <h2 class="text-3xl md:text-4xl font-black text-slate-900 mb-10 md:mb-12 italic uppercase leading-none">Demand <span class="text-[#0046ad]">Initialization</span></h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+      <div class="md:col-span-2 space-y-1">
+        <label class="text-[10px] md:text-[11px] font-black text-slate-500 uppercase ml-1">Requirement Title</label>
+        <input [(ngModel)]="requestForm.title" class="client-input py-5">
+      </div>
+
+      <div class="md:col-span-2 space-y-1">
+        <label class="text-[10px] md:text-[11px] font-black text-slate-500 uppercase ml-1">Technical Specifications</label>
+        <textarea [(ngModel)]="requestForm.description" class="client-input h-32 md:h-40 py-5"></textarea>
+      </div>
+
+      <div class="md:col-span-2 space-y-1">
+        <label class="text-[10px] md:text-[11px] font-black text-slate-500 uppercase ml-1">Strategic Purpose</label>
+        <input [(ngModel)]="requestForm.purpose" placeholder="Strategic Purpose" class="client-input py-5">
+      </div>
+
+      <div class="space-y-1">
+        <label class="text-[10px] md:text-[11px] font-black text-slate-500 uppercase ml-1">Architecture Type</label>
+        <select [(ngModel)]="requestForm.type" class="client-input">
+          <option value="">Architecture Type</option>
+          <option>WEB APP</option>
+          <option>ANDROID APP</option>
+          <option>IOS APP</option>
+        </select>
+      </div>
+
+      <div class="space-y-1">
+  <label class="text-[10px] md:text-[11px] font-black text-slate-500 uppercase ml-1">Deadline</label>
+  <input 
+    type="date" 
+    [(ngModel)]="requestForm.deadline" 
+    class="client-input cursor-pointer"
+    (keydown)="$event.preventDefault()"
+    (click)="openPicker($event)">
+</div>
+
+      <div class="md:col-span-2 grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="space-y-1">
+          <label class="text-[10px] font-black text-slate-500 uppercase ml-1">Frontend</label>
+          <select [(ngModel)]="requestForm.frontend" class="client-input">
+            <option value="">Select</option>
+            <option *ngFor="let opt of frontendOptions" [value]="opt">{{opt}}</option>
+          </select>
+        </div>
+        <div class="space-y-1">
+          <label class="text-[10px] font-black text-slate-500 uppercase ml-1">Backend</label>
+          <select [(ngModel)]="requestForm.backend" class="client-input">
+            <option value="">Select</option>
+            <option *ngFor="let opt of backendOptions" [value]="opt">{{opt}}</option>
+          </select>
+        </div>
+        <div class="space-y-1">
+          <label class="text-[10px] font-black text-slate-500 uppercase ml-1">Framework</label>
+          <select [(ngModel)]="requestForm.framework" class="client-input">
+            <option value="">Select</option>
+            <option *ngFor="let opt of frameworkOptions" [value]="opt">{{opt}}</option>
+          </select>
+        </div>
+        <div class="space-y-1">
+          <label class="text-[10px] font-black text-slate-500 uppercase ml-1">Database</label>
+          <select [(ngModel)]="requestForm.database" class="client-input">
+            <option value="">Select</option>
+            <option *ngFor="let opt of databaseOptions" [value]="opt">{{opt}}</option>
+          </select>
         </div>
       </div>
+
+      <div class="md:col-span-2 space-y-1">
+        <label class="text-[10px] md:text-[11px] font-black text-slate-500 uppercase ml-1">Budget Allocation</label>
+        <input [(ngModel)]="requestForm.budget" placeholder="Budget Allocation" class="client-input py-5">
+      </div>
+    </div>
+
+    <button (click)="createRequest()" class="w-full mt-10 md:mt-12 py-5 md:py-6 bg-[#0046ad] text-white rounded-[1.5rem] md:rounded-[2rem] font-black uppercase text-xs md:text-sm tracking-[0.25em] shadow-2xl active:scale-95 transition-all">Submit Initialization Protocol</button>
+  </div>
+</div>
 
       <div *ngIf="activeSection === 'track'" class="animate-in fade-in duration-500">
         <h2 class="text-3xl md:text-4xl font-black text-slate-900 italic mb-8 md:mb-10 uppercase tracking-tighter leading-none">Request <span class="text-[#0046ad]">Tracking Matrix</span></h2>
@@ -235,26 +327,41 @@ class="client-input text-slate-800"
           <div class="overflow-x-auto">
             <table class="w-full text-left min-w-[700px]">
               <thead class="bg-slate-50 border-b border-slate-100">
-                <tr><th class="p-6 md:p-8 text-[10px] md:text-[11px] font-black text-slate-400 uppercase tracking-widest">Protocol Token</th><th class="p-6 md:p-8 text-[10px] md:text-[11px] font-black text-slate-400 uppercase tracking-widest">Requirement Title</th><th class="p-6 md:p-8 text-[10px] md:text-[11px] font-black text-slate-400 uppercase tracking-widest text-center">Status</th><th class="p-6 md:p-8 text-[10px] md:text-[11px] font-black text-slate-400 uppercase tracking-widest text-right">Timestamp</th></tr>
+                <tr>
+                  <th class="p-6 md:p-8 text-[10px] md:text-[11px] font-black text-slate-400 uppercase tracking-widest">Protocol Token</th>
+                  <th class="p-6 md:p-8 text-[10px] md:text-[11px] font-black text-slate-400 uppercase tracking-widest">Requirement Title</th>
+                  <th class="p-6 md:p-8 text-[10px] md:text-[11px] font-black text-slate-400 uppercase tracking-widest text-center">Status</th>
+                  <th class="p-6 md:p-8 text-[10px] md:text-[11px] font-black text-slate-400 uppercase tracking-widest text-center">Rating</th>
+                  <th class="p-6 md:p-8 text-[10px] md:text-[11px] font-black text-slate-400 uppercase tracking-widest text-right">Timestamp</th>
+                </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let r of requestList" class="border-b border-slate-50 hover:bg-slate-50 transition-all">
-                  <td class="p-6 md:p-8 font-mono text-[10px] md:text-sm font-bold text-[#0046ad]">{{r.token}}</td>
-                  <td class="p-6 md:p-8 text-slate-700 font-black text-sm md:text-base italic">{{r.title}}</td>
-                  <td class="p-6 md:p-8 text-center">
-                    <span [ngClass]="{
-  'bg-red-100 text-red-700': r.status=='unassigned',
-  'bg-yellow-100 text-yellow-700': r.status=='pending',
-  'bg-green-100 text-green-700': r.status=='completed'
-}"
-class="px-4 py-1.5 rounded-lg text-[8px] md:text-[10px] font-black uppercase tracking-widest">
-  {{r.status}}
-</span>
-                  </td>
-                  <td class="p-6 md:p-8 text-[10px] md:text-[11px] font-bold text-slate-400 text-right">
-  {{ r.created_at | date:'MMM d, y • h:mm a' }}
-</td>
-                </tr>
+  <td class="p-6 md:p-8 font-mono text-[10px] md:text-sm font-bold text-[#0046ad]">{{r.token}}</td>
+  <td class="p-6 md:p-8 text-slate-700 font-black text-sm md:text-base italic">{{r.title}}</td>
+  <td class="p-6 md:p-8 text-center">
+    <span [ngClass]="{
+      'bg-red-100 text-red-700': r.status=='unassigned',
+      'bg-yellow-100 text-yellow-700': r.status=='pending',
+      'bg-green-100 text-green-700': r.status=='completed'
+    }" class="px-4 py-1.5 rounded-lg text-[8px] md:text-[10px] font-black uppercase tracking-widest">
+      {{r.status}}
+    </span>
+  </td>
+
+  <td class="p-6 md:p-8 text-center">
+    <div class="flex items-center justify-center gap-1">
+      <button *ngFor="let star of [1,2,3,4,5]" (click)="rateRequest(r.token, star)" class="hover:scale-125 transition-transform cursor-pointer outline-none">
+        <span class="text-lg transition-colors" 
+              [class.text-yellow-400]="(r.rating || 0) >= star" 
+              [class.text-slate-200]="(r.rating || 0) < star">★</span>
+      </button>
+    </div>
+  </td>
+  <td class="p-6 md:p-8 text-[10px] md:text-[11px] font-bold text-slate-400 text-right">
+    {{ r.created_at | date:'MMM d, y • h:mm a' }}
+  </td>
+</tr>
               </tbody>
             </table>
           </div>

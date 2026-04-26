@@ -2,6 +2,10 @@ import { Component, OnInit, ChangeDetectorRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { INDIA_LOCATIONS } from './india-locations';
+import { FRONTEND_LIST } from './frontend';
+import { BACKEND_LIST } from './backend';
+import { FRAMEWORK_LIST } from './framework';
+import { DATABASE_LIST } from './database';
 
 import { auth, db, storage } from '../../firebase';
 
@@ -29,6 +33,10 @@ import {
 
 export class ClientComponent implements OnInit {
   citiesByState = INDIA_LOCATIONS;
+  frontendOptions = FRONTEND_LIST;
+  backendOptions = BACKEND_LIST;
+  frameworkOptions = FRAMEWORK_LIST;
+  databaseOptions = DATABASE_LIST;
   
 
   // 🔹 SIDEBAR CONFIGURATION
@@ -150,6 +158,10 @@ onStateChange() {
     description: '',
     purpose: '',
     type: '',
+    frontend: '',
+    backend: '',
+    framework: '',
+    database: '',
     techStack: '',
     deadline: '',
     budget: ''
@@ -248,6 +260,16 @@ onStateChange() {
     const snap = await getDoc(doc(db, "users", this.uid!));
     const docs = snap.data()?.['requests']?.[this.selectedToken]?.['documents'] || {};
     this.uploadedDocs = Object.keys(docs).map(type => ({ type, ...docs[type] }));
+  }
+
+  async rateRequest(token: string, rating: number) {
+    if (!this.uid) return;
+    await updateDoc(doc(db, "users", this.uid), {
+      [`requests.${token}.rating`]: rating
+    });
+    const req = this.requestList.find(r => r.token === token);
+    if (req) req.rating = rating;
+    this.cdr.detectChanges();
   }
 
   validatePhone(field: 'phone' | 'altPhone') {
@@ -380,7 +402,13 @@ onStateChange() {
       description: this.requestForm.description,
       purpose: this.requestForm.purpose,
       type: this.requestForm.type,
-      techStack: this.requestForm.techStack,
+      // Capturing individual dropdown values
+      frontend: this.requestForm.frontend,
+      backend: this.requestForm.backend,
+      framework: this.requestForm.framework,
+      database: this.requestForm.database,
+      // Maintaining techStack as a combined string for consistency
+      techStack: `${this.requestForm.frontend} | ${this.requestForm.backend} | ${this.requestForm.framework} | ${this.requestForm.database}`,
       deadline: this.requestForm.deadline,
       budget: this.requestForm.budget,
       status: "unassigned",
@@ -388,10 +416,29 @@ onStateChange() {
     };
 
     await updateDoc(userRef, { [`requests.${tokenId}`]: payload });
-    await setDoc(doc(db, "requests", "unassigned"), { [tokenId]: { clientId: this.uid, ...payload } }, { merge: true });
+    // Each request is its own document so the Distribution Engine listener can detect it
+    await setDoc(doc(db, "requests", tokenId), { clientId: this.uid, ...payload });
     alert("Request Initialized.");
-    this.requestForm = { title: '', description: '', purpose: '', type: '', techStack: '', deadline: '', budget: '' };
+    this.requestForm = { 
+  title: '', 
+  description: '', 
+  purpose: '', 
+  type: '', 
+  frontend: '', 
+  backend: '', 
+  framework: '', 
+  database: '', 
+  techStack: '', 
+  deadline: '', 
+  budget: '' 
+};
     await this.loadRequestStatus();
+  }
+
+  openPicker(event: any) {
+    if ('showPicker' in HTMLInputElement.prototype) {
+      event.target.showPicker();
+    }
   }
 
   async loadRequestStatus() {
