@@ -106,8 +106,8 @@
         <!-- CONTENT -->
         <div class="flex-1 p-4 sm:p-6 md:p-8">
 
-            <!-- <h1 class="w-full text-left py-2 rounded-lg text-[11px] font-black italic uppercase tracking-wide hover:bg-blue-100">Employee Dashboard asdad</h1>
-            <p class="text-xs font-bold text-gray-400 uppercase tracking-[0.15em] mb-6">Welcome, {{userName}}</p> -->
+            <h1 class="w-full text-left py-2 rounded-lg text-[11px] font-black italic uppercase tracking-wide hover:bg-blue-100">Employee Dashboard</h1>
+            <p class="text-xs font-bold text-gray-400 uppercase tracking-[0.15em] mb-6">Welcome, {{userName}}</p>
 
             <!-- DASHBOARD -->
             <!-- DASHBOARD -->
@@ -201,75 +201,50 @@
     </div>
 </div>
             <!-- 🔄 ONGOING PROJECTS -->
+<!-- 🔄 ONGOING PROJECTS (DYNAMIC) -->
 <div *ngIf="activeSection === 'ongoing'">
 
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-        <!-- CARD 1 -->
-        <div class="p-6 rounded-2xl text-white shadow-lg hover:scale-105 transition
-                    bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800">
+        <div *ngFor="let req of clientRequests; let i = index">
 
-            <h3 class="text-lg font-black italic uppercase">Employee Dashboard</h3>
-            <p class="text-xs mt-2 opacity-90">
-                Building internal dashboard with analytics and reporting.
-            </p>
+            <!-- ONLY SHOW ONGOING -->
+            <div *ngIf="req.status === 'accepted'"
+                (click)="openRequestDetails(req)"
+                [ngClass]="getCardColor(i)"
+                class="p-6 rounded-2xl text-white shadow-lg hover:scale-105 transition cursor-pointer">
 
-            <div class="mt-4">
-                <div class="w-full bg-white/20 rounded-full h-2">
-                    <div class="bg-white h-2 rounded-full w-[70%]"></div>
+                <!-- TITLE -->
+                <h3 class="text-lg font-black italic uppercase">
+                    {{req.title}}
+                </h3>
+
+                <!-- DESCRIPTION -->
+                <p class="text-xs mt-2 opacity-90">
+                    {{req.description}}
+                </p>
+
+                <!-- PROGRESS (DYNAMIC OR STATIC DEFAULT) -->
+                <!-- 💬 MESSAGE DISPLAY -->
+<div class="mt-4 bg-white/20 p-3 rounded-lg">
+    <p class="text-[9px] font-black uppercase tracking-wider opacity-80">
+        Latest Update
+    </p>
+
+    <p class="text-xs mt-1 italic leading-relaxed">
+        {{ req.message || 'No updates yet' }}
+    </p>
+</div>
+                <!-- FOOTER -->
+                <div class="flex justify-between mt-4 text-[10px] font-black uppercase">
+                    <span class="bg-white/20 px-2 py-1 rounded">
+                        Ongoing
+                    </span>
+                    <span>
+                        📅 {{ formatDate(req.deadline) }}
+                    </span>
                 </div>
-                <p class="text-[9px] mt-1 font-bold uppercase">Progress: 70%</p>
-            </div>
 
-            <div class="flex justify-between mt-4 text-[10px] font-black uppercase">
-                <span class="bg-white/20 px-2 py-1 rounded">In Progress</span>
-                <span>📅 10 Apr 2026</span>
-            </div>
-
-        </div>
-
-        <!-- CARD 2 -->
-        <div class="p-6 rounded-2xl text-white shadow-lg hover:scale-105 transition
-                    bg-gradient-to-br from-indigo-600 via-indigo-700 to-indigo-800">
-
-            <h3 class="text-lg font-black italic uppercase">E-Commerce Platform</h3>
-            <p class="text-xs mt-2 opacity-90">
-                Developing full-stack shopping platform with payments.
-            </p>
-
-            <div class="mt-4">
-                <div class="w-full bg-white/20 rounded-full h-2">
-                    <div class="bg-white h-2 rounded-full w-[50%]"></div>
-                </div>
-                <p class="text-[9px] mt-1 font-bold uppercase">Progress: 50%</p>
-            </div>
-
-            <div class="flex justify-between mt-4 text-[10px] font-black uppercase">
-                <span class="bg-white/20 px-2 py-1 rounded">In Progress</span>
-                <span>📅 15 Apr 2026</span>
-            </div>
-
-        </div>
-
-        <!-- CARD 3 -->
-        <div class="p-6 rounded-2xl text-white shadow-lg hover:scale-105 transition
-                    bg-gradient-to-br from-purple-600 via-purple-700 to-purple-800">
-
-            <h3 class="text-lg font-black italic uppercase">Mobile App UI</h3>
-            <p class="text-xs mt-2 opacity-90">
-                Designing modern UI for Android & iOS application.
-            </p>
-
-            <div class="mt-4">
-                <div class="w-full bg-white/20 rounded-full h-2">
-                    <div class="bg-white h-2 rounded-full w-[85%]"></div>
-                </div>
-                <p class="text-[9px] mt-1 font-bold uppercase">Progress: 85%</p>
-            </div>
-
-            <div class="flex justify-between mt-4 text-[10px] font-black uppercase">
-                <span class="bg-white/20 px-2 py-1 rounded">In Progress</span>
-                <span>📅 08 Apr 2026</span>
             </div>
 
         </div>
@@ -330,23 +305,86 @@
 </div>
 
             <!-- ACCOUNT (ADVANCED UI) -->
-             <div *ngIf="activeSection === 'account'" class="max-w-3xl mx-auto">
+             <div *ngIf="activeSection === 'account'" class="max-w-5xl mx-auto">
                 <div class="bg-white rounded-[2rem] shadow-xl overflow-hidden border border-gray-100">
                     <div class="bg-gradient-to-br from-[#0047AB] to-blue-800 p-8 text-white">
-                        <h2 class="text-3xl font-black italic uppercase tracking-tighter">{{userName}}</h2>
-                        <p class="text-xs font-bold opacity-80 uppercase tracking-widest mt-1">{{userRole}} • ID: {{userId}}</p>
+                        <h2 class="text-4xl md:text-5xl font-black italic uppercase tracking-tighter">{{userName}}</h2>
+                        <p class="text-sm font-bold opacity-80 uppercase tracking-widest mt-2">{{userRole}} • ID: {{userId}}</p>
                     </div>
 
                     <div class="p-8">
                         <div class="grid grid-cols-2 gap-4">
                             <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
-                                <p class="text-[9px] font-black text-gray-400 uppercase tracking-widest">Department</p>
-                                <p class="text-sm font-bold text-gray-700">Software Development</p>
+                                <p class="text-[12px] font-black text-gray-400 uppercase tracking-widest">Department</p>
+                                <p class="text-base md:text-lg font-bold text-gray-700">Software Development</p>
                             </div>
                             <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
-                                <p class="text-[9px] font-black text-gray-400 uppercase tracking-widest">Location</p>
-                                <p class="text-sm font-bold text-gray-700">Chennai, India</p>
+                                <p class="text-[12px] font-black text-gray-400 uppercase tracking-widest">Location</p>
+                                <p class="text-base md:text-lg font-bold text-gray-700">Chennai, India</p>
                             </div>
+                            <!-- SKILLS SECTION -->
+<div class="mt-6 grid grid-cols-1 md:grid-cols-3">
+
+    <!-- FRONTEND -->
+    <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
+        <p class="text-[12px] font-black text-gray-400 uppercase tracking-widest">
+            Frontend
+        </p>
+        <select [(ngModel)]="selectedFrontend"
+    class="mt-4 w-full px-5 py-4 rounded-2xl border text-lg font-bold shadow-sm focus:ring-2 focus:ring-blue-500">
+            <option value="">Select</option>
+    <option *ngFor="let tech of frontendOptions" [value]="tech">
+                {{tech}}
+            </option>
+        </select>
+    </div>
+
+    <!-- BACKEND -->
+    <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
+        <p class="text-[12px] font-black text-gray-400 uppercase tracking-widest">
+            Backend
+        </p>
+        <select [(ngModel)]="selectedBackend"
+    class="mt-4 w-full px-5 py-4 rounded-2xl border text-lg font-bold shadow-sm focus:ring-2 focus:ring-blue-500">
+            <option value="">Select</option>
+    <option *ngFor="let tech of backendOptions" [value]="tech">
+                {{tech}}
+            </option>
+        </select>
+    </div>
+
+    <!-- FRAMEWORK -->
+    <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
+        <p class="text-[12px] font-black text-gray-400 uppercase tracking-widest">
+            Framework
+        </p>
+        <select [(ngModel)]="selectedFramework"
+    class="mt-4 w-full px-5 py-4 rounded-2xl border text-lg font-bold shadow-sm focus:ring-2 focus:ring-blue-500">
+            <option value="">Select</option>
+    <option *ngFor="let tech of frameworkOptions" [value]="tech">
+                {{tech}}
+            </option>
+        </select>
+    </div>
+
+</div>
+
+<!-- ⭐ RATING SECTION -->
+<div class="mt-8 bg-gray-50 p-6 rounded-2xl border border-gray-100">
+    <p class="text-[12px] font-black text-gray-400 uppercase tracking-widest mb-2">
+        Rating
+    </p>
+
+    <div class="flex gap-3 text-3xl md:text-4xl cursor-pointer">
+        <span *ngFor="let star of [1,2,3,4,5]" 
+      (click)="setRating(star)"
+      class="transition transform hover:scale-125"
+      [class.text-yellow-400]="star <= rating"
+      [class.text-gray-300]="star > rating">
+            ★
+        </span>
+    </div>
+</div>
                         </div>
 
                         <div class="mt-8 grid grid-cols-2 gap-4">
@@ -362,7 +400,125 @@
             </div>
         </div>
     </div>
+    <!-- 🔥 TASK DETAILS MODAL -->
+<div *ngIf="showDetails"
+     class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
 
+  <div class="bg-white w-full max-w-2xl rounded-2xl shadow-2xl p-6 relative">
+
+    <!-- ❌ CLOSE BUTTON -->
+    <button (click)="closeDetails()"
+            class="absolute top-3 right-4 text-gray-500 text-xl font-bold">
+      ✕
+    </button>
+
+    <!-- TITLE -->
+    <h2 class="text-xl font-black italic uppercase text-gray-800 mb-4">
+      {{selectedRequest?.title}}
+    </h2>
+
+    <!-- DESCRIPTION -->
+    <p class="text-sm text-gray-600 mb-4">
+      {{selectedRequest?.description}}
+    </p>
+
+    <!-- DETAILS GRID -->
+    <div class="grid grid-cols-2 gap-4 text-sm font-bold">
+
+      <div class="bg-gray-50 p-3 rounded-lg">
+        Frontend: <span class="text-blue-700">{{selectedRequest?.frontend}}</span>
+      </div>
+
+      <div class="bg-gray-50 p-3 rounded-lg">
+        Backend: <span class="text-blue-700">{{selectedRequest?.backend}}</span>
+      </div>
+
+      <div class="bg-gray-50 p-3 rounded-lg">
+        Framework: <span class="text-blue-700">{{selectedRequest?.framework}}</span>
+      </div>
+
+      <div class="bg-gray-50 p-3 rounded-lg">
+        Database: <span class="text-blue-700">{{selectedRequest?.database}}</span>
+      </div>
+
+      <div class="bg-gray-50 p-3 rounded-lg col-span-2">
+        Budget: <span class="text-green-600">₹{{selectedRequest?.budget}}</span>
+      </div>
+
+    </div>
+
+    <!-- STATUS INPUT -->
+    <!-- 💬 MESSAGE SECTION -->
+<div class="mt-6">
+  <label class="text-xs font-black uppercase text-gray-400">
+    Message / Notes
+  </label>
+
+  <textarea [(ngModel)]="selectedRequest.message"
+          (keydown)="blockSpecialChars($event)"
+          (paste)="handlePaste($event)"
+          rows="3"
+          placeholder="Write update or notes..."
+          class="mt-2 w-full px-4 py-2 border rounded-lg text-sm font-semibold resize-none">
+</textarea>
+</div>
+
+<!-- 📊 STATUS SECTION -->
+<div class="mt-6">
+  <label class="text-xs font-black uppercase text-gray-400">
+    Update Status
+  </label>
+
+  <select [(ngModel)]="selectedRequest.status"
+          class="mt-2 w-full px-4 py-2 border rounded-lg font-bold">
+    <option value="pending">Pending</option>
+    <option value="accepted">Ongoing</option>
+    <option value="completed">Completed</option>
+  </select>
+</div>
+
+<!-- 📅 DEADLINE (CALENDAR INPUT) -->
+<div class="mt-6">
+  <label class="text-xs font-black uppercase text-gray-400">
+    Update Deadline
+  </label>
+
+  <input type="date"
+         [(ngModel)]="selectedRequest.deadline"
+         class="mt-2 w-full px-4 py-2 border rounded-lg font-bold">
+</div>
+
+<!-- ⏰ TIME INPUT -->
+<div class="mt-6">
+  <label class="text-xs font-black uppercase text-gray-400">
+    Select Time
+  </label>
+
+  <input type="time"
+         [(ngModel)]="selectedRequest.time"
+         class="mt-2 w-full px-4 py-2 border rounded-lg font-bold">
+</div>
+
+<!-- SAVE BUTTON -->
+<button (click)="updateStatus()"
+        class="mt-5 bg-blue-700 text-white px-5 py-2 rounded-lg font-bold hover:bg-blue-800 w-max">
+  Save Changes
+</button>
+
+<!-- DEADLINE DISPLAY (BOTTOM RIGHT) -->
+<div class="absolute bottom-4 right-6 text-xs font-black text-gray-500">
+  📅 {{ formatDate(selectedRequest?.deadline) }}
+</div>
+
+    
+
+    <!-- DEADLINE -->
+    <div class="absolute bottom-4 right-6 text-xs font-black text-gray-500">
+      📅 {{ formatDate(selectedRequest?.deadline) }}
+    </div>
+
+  </div>
+</div>
     <!-- FOOTER -->
     <footer class="bg-gray-50 border-t px-6 py-3 flex justify-between text-[9px] font-black text-gray-400 uppercase tracking-[0.2em]">
         <div>© 2026 <span class="text-gray-900 font-black">MAZ SOFTWARE</span></div>

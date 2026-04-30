@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-
+import { updateDoc } from 'firebase/firestore';
 import { auth, db } from '../../firebase';
 import { onAuthStateChanged, sendPasswordResetEmail, signOut } from 'firebase/auth';
 
@@ -63,6 +63,64 @@ export class EmployeeComponent implements OnInit {
       await this.loadClientRequests();
     });
   }
+
+sanitizeMessage() {
+  if (!this.selectedRequest) return;
+
+  // ✅ Allow letters, numbers, space, basic punctuation (. ,)
+  this.selectedRequest.message = this.selectedRequest.message
+    ?.replace(/[^a-zA-Z0-9 .,]/g, '');
+}
+
+ async updateStatus() {
+  if (!this.selectedRequest) return;
+
+  // FINAL SANITIZATION (IMPORTANT)
+  this.selectedRequest.message = this.selectedRequest.message
+    ?.replace(/[^a-zA-Z0-9 .,]/g, '');
+
+  const ref = doc(db, "requests", this.selectedRequest.id);
+
+  await updateDoc(ref, {
+    status: this.selectedRequest.status,
+    message: this.selectedRequest.message || "",
+    deadline: this.selectedRequest.deadline,
+    time: this.selectedRequest.time || ""
+  });
+
+  alert("Task updated successfully!");
+
+  this.closeDetails();
+  this.loadClientRequests();
+}
+
+blockSpecialChars(event: KeyboardEvent) {
+  const allowedPattern = /^[a-zA-Z0-9 .,]$/;
+
+  // Allow control keys
+  const controlKeys = [
+    'Backspace', 'Tab', 'ArrowLeft', 'ArrowRight',
+    'Delete', 'Enter'
+  ];
+
+  if (controlKeys.includes(event.key)) return;
+
+  if (!allowedPattern.test(event.key)) {
+    event.preventDefault(); // ❌ BLOCK INPUT
+  }
+}
+
+handlePaste(event: ClipboardEvent) {
+  event.preventDefault();
+
+  const pastedText = event.clipboardData?.getData('text') || '';
+
+  // Clean pasted text
+  const cleanText = pastedText.replace(/[^a-zA-Z0-9 .,]/g, '');
+
+  // Insert cleaned text manually
+  document.execCommand('insertText', false, cleanText);
+}
 
   async loadUserData() {
     const ref = doc(db, "users", this.userId);
@@ -240,4 +298,170 @@ toggleSidebar() {
 closeSidebar() {
   this.isSidebarOpen = false;
 }
+// DROPDOWN OPTIONS
+frontendOptions = ["HTML",
+"CSS",
+"JavaScript",
+"TypeScript",
+"React",
+"Next.js",
+"Angular",
+"Vue",
+"Nuxt.js",
+"Svelte",
+"SvelteKit",
+"Preact",
+"SolidJS",
+"Ember.js",
+"Backbone.js",
+"Alpine.js",
+"Lit",
+"jQuery",
+"Redux",
+"Redux Toolkit",
+"MobX",
+"Zustand",
+"Recoil",
+"Jotai",
+"Context API",
+"Vuex",
+"Pinia",
+"NgRx",
+"Tailwind CSS",
+"Bootstrap",
+"Material UI",
+"Chakra UI",
+"Ant Design",
+"Semantic UI",
+"Bulma",
+"Foundation",
+"ShadCN UI",
+"PrimeReact",
+"Sass",
+"SCSS",
+"Less",
+"Stylus",
+"Framer Motion",
+"GSAP",
+"Lottie",
+"Three.js",
+"D3.js",
+"Chart.js",
+"Recharts",
+"ECharts",
+"Webpack",
+"Vite",
+"Parcel",
+"Rollup",
+"esbuild",
+"Snowpack",
+"Storybook",
+"Jest",
+"Vitest",
+"Cypress",
+"Playwright",
+"Testing Library",
+"Mocha",
+"Chai",
+"React Native",
+"Flutter",
+"Ionic",
+"Expo",
+"NativeScript"];
+backendOptions = ["Node.js",
+"Express.js",
+"NestJS",
+"Fastify",
+"Koa",
+"Hapi",
+"AdonisJS",
+"Sails.js",
+"Python",
+"Django",
+"Flask",
+"FastAPI",
+"Tornado",
+"Bottle",
+"Java",
+"Spring Boot",
+"Spring MVC",
+"Micronaut",
+"Quarkus",
+"Hibernate",
+"PHP",
+"Laravel",
+"Symfony",
+"CodeIgniter",
+"Ruby",
+"Ruby on Rails",
+"Sinatra",
+"C#",
+"ASP.NET",
+"ASP.NET Core",
+"Go",
+"Gin",
+"Echo",
+"Fiber",
+"Rust",
+"Actix",
+"Rocket",
+"Kotlin",
+"Ktor",
+"Scala",
+"Play Framework",
+"GraphQL",
+"REST API",
+"gRPC",
+"SOAP",
+"tRPC",
+"JWT",
+"OAuth",
+"Passport.js",
+"Firebase Auth",
+"Auth0",
+"Keycloak",
+"Clerk"];
+frameworkOptions = ["Next.js",
+"Nuxt.js",
+"Remix",
+"SvelteKit",
+"Meteor",
+"Blitz.js",
+"RedwoodJS",
+"Angular",
+"Vue",
+"Svelte",
+"Ember.js",
+"Backbone.js",
+"Laravel",
+"Ruby on Rails",
+"Django",
+"Spring Boot",
+"ASP.NET Core",
+"Phoenix",
+"Play Framework",
+"Flutter",
+"React Native",
+"Xamarin",
+"Ionic",
+"Cordova",
+"Electron",
+"Tauri",
+"NW.js",
+"Qt"];
+
+// SELECTED VALUES
+selectedFrontend = '';
+selectedBackend = '';
+selectedFramework = '';
+
+// ⭐ RATING
+rating = 4;
+
+setRating(value: number) {
+  this.rating = value;
+}
+
+
+
 }
